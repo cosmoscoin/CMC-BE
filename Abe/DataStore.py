@@ -56,22 +56,9 @@ CONFIG_DEFAULTS = {
 WORK_BITS = 304  # XXX more than necessary.
 
 CHAIN_CONFIG = [
-    {"chain":"Bitcoin",
-     "code3":"BTC", "address_version":"\x00", "magic":"\xf9\xbe\xb4\xd9"},
-    {"chain":"Testnet",
-     "code3":"BC0", "address_version":"\x6f", "magic":"\xfa\xbf\xb5\xda"},
-    {"chain":"Namecoin",
-     "code3":"NMC", "address_version":"\x34", "magic":"\xf9\xbe\xb4\xfe"},
-    {"chain":"Weeds", "network":"Weedsnet",
-     "code3":"WDS", "address_version":"\xf3", "magic":"\xf8\xbf\xb5\xda"},
-    {"chain":"BeerTokens",
-     "code3":"BER", "address_version":"\xf2", "magic":"\xf7\xbf\xb5\xdb"},
-    {"chain":"SolidCoin",
-     "code3":"SCN", "address_version":"\x7d", "magic":"\xde\xad\xba\xbe"},
-    {"chain":"ScTestnet",
-     "code3":"SC0", "address_version":"\x6f", "magic":"\xca\xfe\xba\xbe"},
-    #{"chain":"",
-    # "code3":"", "address_version":"\x", "magic":""},
+    {"chain":"CosmosCoin",
+     "code3":"CMC", "address_version":"\x1c", "magic":"\xe4\xe8\xe9\xe5"},
+    
     ]
 
 NULL_HASH = "\0" * 32
@@ -2658,7 +2645,7 @@ store._ddl['txout_approx'],
         chain_ids = frozenset([chain_id])
 
         conffile = dircfg.get("conf",
-                              os.path.join(dircfg['dirname'], "bitcoin.conf"))
+                              os.path.join(dircfg['dirname'], "CosmosCoin.conf"))
         try:
             conf = dict([line.strip().split("=", 1)
                          if "=" in line
@@ -2669,11 +2656,11 @@ store._ddl['txout_approx'],
             store.log.debug("failed to load %s: %s", conffile, e)
             return False
 
-        rpcuser     = conf.get("rpcuser", "")
-        rpcpassword = conf["rpcpassword"]
+        rpcuser     = conf.get("rpcuser", "user")
+        rpcpassword = conf["rpcpassword", "pass"]
         rpcconnect  = conf.get("rpcconnect", "127.0.0.1")
         rpcport     = conf.get("rpcport",
-                               "18332" if "testnet" in conf else "8332")
+                               "19991" if "testnet" in conf else "29991")
         url = "http://" + rpcuser + ":" + rpcpassword + "@" + rpcconnect \
             + ":" + rpcport
 
